@@ -11,52 +11,23 @@ struct ContentView: View {
     
     var emojis = ["🚗", "🏎" ,"🚐", "🚛","🛻", "🛺", "🏍", "🛵", "🦼", "🚲", "🦽", "🚓", "🚎", "🚊", "🚆"]
     
-    @State var emojisCount = 6
+    @State var emojisCount = 10
     
     var body: some View {
         VStack{
             ScrollView {
-                LazyVGrid(columns: [GridItem(),GridItem(),GridItem() ]){
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 65))]){
                     ForEach(emojis[0..<emojisCount], id: \.self) { emoji in
                         CardView(content: emoji).aspectRatio(2/3, contentMode: .fit)
                     }
                 }
             }
             .foregroundColor(.red)
-            Spacer()
-            HStack{
-                remove
-                Spacer()
-                add
-            }
-            .font(.largeTitle)
-            .padding(.horizontal)
             
         }
         .padding(.horizontal)
         
        
-    }
-    
-    var remove: some View {
-        Button{
-            if emojisCount > 1 {
-                emojisCount -= 1
-            }
-            
-        } label: {
-            Image(systemName: "minus.circle")
-        }
-    }
-    var add: some View {
-        Button {
-            if emojisCount < emojis.count {
-                emojisCount += 1
-            }
-            
-        } label: {
-            Image(systemName: "plus.circle")
-        }
     }
 }
 
@@ -71,7 +42,7 @@ struct CardView: View {
             if isFaceUp {
                 shape.fill()
                     .foregroundColor(.white)
-                shape.stroke(lineWidth: 3)
+                shape.strokeBorder(lineWidth: 3)
                 Text(content).font(.largeTitle).foregroundColor(.blue)
             } else {
                 shape.fill()
